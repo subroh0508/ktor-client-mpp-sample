@@ -1,0 +1,14 @@
+{
+  "name": "ktor-client-mpp-sample",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start:main": "cd desktop && yarn start:main",
+    "start:renderer": "cd desktop && yarn start:renderer"
+  },
+  "workspaces": [
+    "build/js/packages/*",
+    "build/js/packages_imported/**",
+    "desktop"
+  ]
+}
