@@ -3,7 +3,13 @@ import { IdolColorActions } from 'ktor-client-mpp-sample-repository';
 onload = async () => {
     const div = document.getElementById('main');
 
-    const items = await new IdolColorActions().loadItems();
+    let items;
+    try {
+        items = await new IdolColorActions().loadItems();
+    } catch (e) {
+        console.log(e);
+        items = [];
+    }
 
     items.forEach(item => {
         const box = document.createElement('div');

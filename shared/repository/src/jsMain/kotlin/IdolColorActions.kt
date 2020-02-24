@@ -31,9 +31,9 @@ class IdolColorActions : CoroutineScope {
     )
 
     @JsName("loadItems")
-    fun loadItems(): Promise<List<IdolColor>> = Promise { resolve, reject ->
+    fun loadItems(): Promise<Array<IdolColor>> = Promise { resolve, reject ->
         launch {
-            runCatching { repository.search() }
+            runCatching { repository.search().toTypedArray() }
                 .onSuccess(resolve)
                 .onFailure(reject)
         }
