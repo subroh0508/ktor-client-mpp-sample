@@ -7,7 +7,11 @@ import pages.DevelopmentPage
 import pages.HowToUsePage
 import pages.TermsPage
 import react.RBuilder
-import react.router.dom.*
+import react.router.dom.RouteResultHistory
+import utilities.browserRouter
+import utilities.route
+import utilities.switch
+import utilities.useLocation
 
 fun RBuilder.routing() = browserRouter {
     AppFrameContainer {

@@ -12,7 +12,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.erased.instance
 import pages.IdolSearchPage
 import react.*
-import react.router.dom.useHistory
 import utilities.*
 
 @Suppress("FunctionName")

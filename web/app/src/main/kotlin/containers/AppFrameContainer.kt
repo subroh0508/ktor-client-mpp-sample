@@ -5,15 +5,14 @@ import components.atoms.appBarTop
 import components.templates.appMenu
 import isExpandAppBar
 import kotlinext.js.jsObject
-import kotlinx.css.*
 import materialui.styles.palette.PaletteType
 import materialui.useMediaQuery
 import org.w3c.dom.get
 import org.w3c.dom.set
 import react.*
-import react.router.dom.useHistory
 import themes.ThemeProvider
 import utilities.Actions
+import utilities.useHistory
 import kotlin.browser.localStorage
 
 @Suppress("FunctionName")

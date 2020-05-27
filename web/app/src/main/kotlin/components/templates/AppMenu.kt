@@ -16,7 +16,7 @@ import materialui.components.typography.typographyH6
 import materialui.styles.makeStyles
 import materialui.styles.muitheme.spacing
 import react.*
-import react.router.dom.useHistory
+import utilities.useHistory
 
 fun RBuilder.appMenu(handler: RHandler<AppMenuProps>) = child(AppMenuComponent, handler = handler)
 
