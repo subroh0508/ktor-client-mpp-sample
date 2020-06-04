@@ -12,7 +12,7 @@ val appKodein = Kodein { import(AppModule) }
 fun main() {
     window.onload = {
         render(document.getElementById("root")) {
-            console.log(ReactRouterDomModule.BrowserRouter)
+            console.log(ReactRouterDomModule)
             routing()
         }
     }

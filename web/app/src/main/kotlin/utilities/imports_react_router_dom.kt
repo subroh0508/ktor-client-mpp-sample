@@ -22,27 +22,12 @@ external interface ReactRouterDom {
 @JsModule("react-router-dom")
 external val ReactRouterDomModule: ReactRouterDom
 
-@Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
-internal val Module: ReactRouterDom =
-    if (ReactRouterDomModule != undefined)
-        ReactRouterDomModule
-    else
-        window.asDynamic().ReactRouterDOM as ReactRouterDom
+fun useHistory(): RouteResultHistory = ReactRouterDomModule.useHistory()
+fun useLocation(): RouteResultLocation = ReactRouterDomModule.useLocation()
 
-internal fun hashRouterComponent() = Module.HashRouter
-internal fun browserRouterComponent() = Module.BrowserRouter
-internal fun switchComponent() = Module.Switch
-internal fun <T: RProps> routeComponent() = Module.Route as RClass<T>
-internal fun linkComponent() = Module.Link
-internal fun <T: RProps> navLinkComponent() = Module.NavLink as RClass<T>
-internal fun redirectComponent() = Module.Redirect
+fun RBuilder.browserRouter(handler: RHandler<RProps>) = ReactRouterDomModule.BrowserRouter(handler)
 
-fun useHistory(): RouteResultHistory = Module.useHistory()
-fun useLocation(): RouteResultLocation = Module.useLocation()
-
-fun RBuilder.browserRouter(handler: RHandler<RProps>) = browserRouterComponent()(handler)
-
-fun RBuilder.switch(handler: RHandler<RProps>) = switchComponent()(handler)
+fun RBuilder.switch(handler: RHandler<RProps>) = ReactRouterDomModule.Switch(handler)
 
 fun RBuilder.route(
     path: String,
@@ -50,7 +35,7 @@ fun RBuilder.route(
     strict: Boolean = false,
     render: () -> ReactElement?
 ): ReactElement {
-    return (routeComponent<RouteProps<RProps>>()) {
+    return (ReactRouterDomModule.Route as RClass<RouteProps<RProps>>) {
         attrs {
             this.path = path
             this.exact = exact
