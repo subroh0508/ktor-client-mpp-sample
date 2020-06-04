@@ -31,25 +31,26 @@ external interface ReactRouterDom {
     val Redirect : RClass<RedirectProps>
 }
 
-private val Module get() = kotlinext.js.require("react-router-dom")
+@JsModule("react-router-dom")
+external val ReactRouterDomModule: ReactRouterDom
 
 @Suppress("UNCHECKED_CAST_TO_EXTERNAL_INTERFACE")
-internal val ReactRouterDomModule: ReactRouterDom =
-    if (Module != undefined)
-        Module as ReactRouterDom
+internal val Module: ReactRouterDom =
+    if (ReactRouterDomModule != undefined)
+        ReactRouterDomModule
     else
         window.asDynamic().ReactRouterDOM as ReactRouterDom
 
-internal fun hashRouterComponent() = ReactRouterDomModule.HashRouter
-internal fun browserRouterComponent() = ReactRouterDomModule.BrowserRouter
-internal fun switchComponent() = ReactRouterDomModule.Switch
-internal fun <T: RProps> routeComponent() = ReactRouterDomModule.Route as RClass<T>
-internal fun linkComponent() = ReactRouterDomModule.Link
-internal fun <T: RProps> navLinkComponent() = ReactRouterDomModule.NavLink as RClass<T>
-internal fun redirectComponent() = ReactRouterDomModule.Redirect
+internal fun hashRouterComponent() = Module.HashRouter
+internal fun browserRouterComponent() = Module.BrowserRouter
+internal fun switchComponent() = Module.Switch
+internal fun <T: RProps> routeComponent() = Module.Route as RClass<T>
+internal fun linkComponent() = Module.Link
+internal fun <T: RProps> navLinkComponent() = Module.NavLink as RClass<T>
+internal fun redirectComponent() = Module.Redirect
 
-fun useHistory(): RouteResultHistory = ReactRouterDomModule.rawUseHistory()
-fun useLocation(): RouteResultLocation = ReactRouterDomModule.rawUseLocation()
+fun useHistory(): RouteResultHistory = Module.rawUseHistory()
+fun useLocation(): RouteResultLocation = Module.rawUseLocation()
 
 fun RBuilder.browserRouter(handler: RHandler<RProps>) = browserRouterComponent()(handler)
 
