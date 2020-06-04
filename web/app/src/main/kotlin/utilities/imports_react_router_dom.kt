@@ -5,29 +5,17 @@ import react.router.dom.*
 import kotlin.browser.window
 
 external interface ReactRouterDom {
-    @JsName("useHistory")
-    fun rawUseHistory(): RouteResultHistory
-    @JsName("useLocation")
-    fun rawUseLocation(): RouteResultLocation
-    @JsName("useParams")
-    fun rawUseParams(): dynamic
-    @JsName("useRouteMatch")
-    fun <T : RProps> rawUseRouteMatch(options: dynamic): RouteResultMatch<T>
-    @JsName("withRouter")
-    fun <T : RProps> rawWithRouter(component: dynamic): RClass<T>
-    @Suppress("PropertyName")
+    fun useHistory(): RouteResultHistory
+    fun useLocation(): RouteResultLocation
+    fun useParams(): dynamic
+    fun <T : RProps> useRouteMatch(options: dynamic): RouteResultMatch<T>
+    fun <T : RProps> withRouter(component: dynamic): RClass<T>
     val HashRouter: RClass<RProps>
-    @Suppress("PropertyName")
     val BrowserRouter: RClass<RProps>
-    @Suppress("PropertyName")
     val Switch: RClass<RProps>
-    @Suppress("PropertyName")
     val Route: RClass<dynamic>
-    @Suppress("PropertyName")
     val Link: RClass<LinkProps>
-    @Suppress("PropertyName")
     val NavLink: RClass<dynamic>
-    @Suppress("PropertyName")
     val Redirect : RClass<RedirectProps>
 }
 
@@ -49,8 +37,8 @@ internal fun linkComponent() = Module.Link
 internal fun <T: RProps> navLinkComponent() = Module.NavLink as RClass<T>
 internal fun redirectComponent() = Module.Redirect
 
-fun useHistory(): RouteResultHistory = Module.rawUseHistory()
-fun useLocation(): RouteResultLocation = Module.rawUseLocation()
+fun useHistory(): RouteResultHistory = Module.useHistory()
+fun useLocation(): RouteResultLocation = Module.useLocation()
 
 fun RBuilder.browserRouter(handler: RHandler<RProps>) = browserRouterComponent()(handler)
 
