@@ -1,5 +1,8 @@
+import java.io.File
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.targets.js.npm.NpmDependency
+import org.jetbrains.kotlin.gradle.targets.js.npm.npmProject
+import org.jetbrains.kotlin.gradle.targets.js.npm.NpmProject
 
 plugins {
     kotlin("js")
@@ -8,7 +11,17 @@ plugins {
 
 kotlin {
     target {
-        useCommonJs()
+        compilations.all {
+            compileKotlinTask.kotlinOptions {
+                moduleKind = "commonjs"
+                sourceMap = true
+                sourceMapEmbedSources = null
+            }
+            if (compilationName == "main") {
+                buildStorybookTask(npmProject)
+            }
+        }
+        //useCommonJs()
         browser {
             // Ktor's known issue
             // Issue: https://github.com/ktorio/ktor/issues/1339
@@ -74,6 +87,7 @@ kotlin {
 
                 implementation(devNpm("html-webpack-plugin", "^3.2.0"))
                 implementation(devNpm("webpack-cdn-plugin", "^3.2.2"))
+                implementation(devNpm("@storybook/react", "^5.3.19"))
             }
         }
     }
@@ -99,3 +113,23 @@ val copyDistributions by tasks.registering {
 browserWebpack.finalizedBy(copyDistributions)
 
 fun devNpm(name: String, version: String = "*") = NpmDependency(project, name, version, NpmDependency.Scope.DEV)
+
+fun Project.buildStorybookTask(npmProject: NpmProject) {
+    tasks.create("storybook", Exec::class) {
+        doFirst {
+            val dir = File(npmProject.dir, ".storybook")
+            if (!dir.exists()) {
+                dir.mkdir()
+            }
+
+            File(dir, "main.js").writer().use {
+                it.appendln("""
+                    module.exports = { stories: [] };
+                """.trimIndent())
+            }
+        }
+
+        workingDir = npmProject.dir
+        commandLine("node_modules/.bin/start-storybook", "start-storybook")
+    }
+}
