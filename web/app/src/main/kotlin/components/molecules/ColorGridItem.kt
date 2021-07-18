@@ -19,18 +19,17 @@ import net.subroh0508.colormaster.model.IdolColor
 import net.subroh0508.colormaster.presentation.common.throttleFirst
 import react.*
 import react.dom.attrs
-import styled.ReactModule
 import styled.animation
 import utilities.isMobile
 
 fun RBuilder.colorGridItem(handler: RHandler<ColorGridItem>) = child(ColorGridItemComponent, handler = handler)
 
-private val ColorGridItemComponent = memo(functionalComponent<ColorGridItem> { props ->
+private val ColorGridItemComponent = memo(functionComponent<ColorGridItem> { props ->
     val classes = useStyles(props)
     val (mouse, setMouseEvent) = useState(Mouse.NONE)
 
-    val handleOnClick = useCallback(props.onClick, arrayOf(props.item.id))
-    val handleOnDoubleClick = useCallback(props.onDoubleClick, arrayOf(props.item.id))
+    val handleOnClick = useCallback(dependencies = arrayOf(props.item.id), props.onClick)
+    val handleOnDoubleClick = useCallback(dependencies = arrayOf(props.item.id), props.onDoubleClick)
 
     val channel = throttleFirstMouseEventChannel(100) { setMouseEvent(it) }
 
